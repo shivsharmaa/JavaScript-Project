@@ -105,7 +105,30 @@
         </div>
 
         
+    <!-- hr tag create -->
+
         <hr style="background-color: white;">
+        
+        
+        <!--  search box create -->
+
+       <div class="row">
+
+           <div class="form-group col-md-4 mt-5">
+               <input type="text" class="form-control" name="searchInput" id="searchInput" placeholder="search your data" onkeyup="searchData()" />
+            </div>
+            
+            <div class="col-md-1 mt-5 form-control">
+                <select class="selectValue" id="genderSelect" onchange="searchData()" style="color: black; border: none;">
+                    <option ></option>
+                    <option value="male" style="background-color: black;">Male</option>
+                    <option value="female" style="background-color: black;">Female</option>
+                    <option value="others" style="background-color: black;">Others</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- table create for showing data -->
 
         <div class="row mt-5">
             <div class="col-12">

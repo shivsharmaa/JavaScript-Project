@@ -9,7 +9,7 @@ function validateForm(){
     
     
 
-    if(name==""){
+    if(name=="" ){
         alert("Name is required");
         return false;
     }
@@ -124,7 +124,7 @@ function showData(){
         html += "<td>" + element.dob + "</td>";
         html += "<td>" + element.hobbies + "</td>";
         html += "<td>" + element.gender + "</td>";
-        
+                
         html += '<td><button onclick="deleteData(' + index + ')" class="btn btn-danger">Delete</button>';
         html += '<button onclick="updateData(' + index + ')" class="btn btn-warning m-2">Edit</button></td>';
     
@@ -203,13 +203,11 @@ function showData(){
           document.getElementById("female").checked = false;
           document.getElementById("others").checked = false; 
 
-          $(function(){
-            toastr.success("Data Saved Successfully", {timeOut : 2000})
+            $(function(){
+                toastr.success("Data Saved Successfully", {timeOut : 2000})
+            });
         
-
-
-        });
-        
+    
         } 
     }
     
@@ -304,4 +302,86 @@ function showData(){
 
 
 
+    // function searchData(){
 
+    // }
+
+   
+
+    const searchData = () => {
+        // Get the search input value and convert to uppercase for case-insensitive comparison
+        let namefilter = document.getElementById("searchInput").value.toUpperCase();
+        let selectGender = document.getElementById("genderSelect").value.toUpperCase();
+    
+        // Get all rows from the table
+        let myTable = document.getElementById("crudTable");
+        let tr = myTable.getElementsByTagName("tr");
+    
+        // Convert tr HTMLCollection to array for easier manipulation
+        let trArray = Array.from(tr);
+    
+        // Loop through each row and toggle visibility based on search input
+        trArray.filter(row => {
+            let tdName = row.getElementsByTagName("td")[1]; // Assuming search column is the 2nd column (index 1)
+            let tdGender = row.getElementsByTagName("td")[7]; 
+
+
+            if (tdName || tdGender) {
+                let textValue = tdName.textContent || tdName.innerText;
+                let genderValue = tdGender.textContent || tdGender.innerText;
+                let rowValue = textValue.toUpperCase();
+                let rowGender = genderValue.toUpperCase();
+                
+    
+                // Check if the row value contains the filter text or if filter is empty
+                if ((rowValue.indexOf(namefilter) > -1 || namefilter === "") && (selectGender === "" || rowGender === selectGender)) {
+                    row.style.display = ""; // Show the row
+                } else {
+                    row.style.display = "none"; // Hide the row
+                }
+
+
+                //  // Check if the row gender matches the selected gender or if no option is selected
+                //  if (selectGender === "" || rowGender === selectGender) {
+                //     row.style.display = ""; // Show the row
+                // } else {
+                //     row.style.display = "none"; // Hide the row
+                // }
+
+
+
+            }
+        });
+    }
+    
+
+  /*  const genderSearch = () => {
+        // Get the selected gender value from the dropdown
+        let selectGender = document.getElementById("genderSelect").value.toUpperCase();
+    
+        // Get all rows from the table
+        let myTable = document.getElementById("crudTable");
+        let tr = myTable.getElementsByTagName("tr");
+    
+        // Convert tr HTMLCollection to array for easier manipulation
+        let trArray = Array.from(tr);
+    
+        // Loop through each row and toggle visibility based on selected gender
+        
+        trArray.filter(row => {
+            let td = row.getElementsByTagName("td")[7]; // Assuming gender column is the 8th column (index 7)
+            if (td) {
+                let textValue = td.textContent || td.innerText;
+                let rowGender = textValue.toUpperCase();
+                
+                // Check if the row gender matches the selected gender or if no option is selected
+                if (selectGender === "" || rowGender === selectGender) {
+                    row.style.display = ""; // Show the row
+                } else {
+                    row.style.display = "none"; // Hide the row
+                }
+            }
+        });
+    }
+        */
+    
