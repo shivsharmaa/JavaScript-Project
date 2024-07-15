@@ -3,13 +3,15 @@ function validateForm(){
     var name = document.getElementById("name").value;
     var address = document.getElementById("address").value;
     var email = document.getElementById("email").value;
+    var contact = document.getElementById("contactNumber").value;
+    
     var dob = document.getElementById("dob").value;
     var hobbies = document.getElementById("hobbies").value;
     var gender = document.getElementsByName("gender").value;
     
     
 
-    if(name=="" ){
+    if(name==""  ){
         alert("Name is required");
         return false;
     }
@@ -28,9 +30,14 @@ function validateForm(){
 
     }
 
-    if (email == "" || !email.includes("@")) {
+    if (email == "" || !email.includes("@gmail.com")) {
         alert("Invalid email address");
         return false;
+    }
+
+    if(contact ==="" ){
+
+        alert("Contact Number is mandatory")
     }
     
 
@@ -121,6 +128,7 @@ function showData(){
         html += "<td>" + element.age + "</td>";
         html += "<td>" + element.address + "</td>";
         html += "<td>" + element.email + "</td>";
+        html += "<td>" + element.contactNumber + "</td>";
         html += "<td>" + element.dob + "</td>";
         html += "<td>" + element.hobbies + "</td>";
         html += "<td>" + element.gender + "</td>";
@@ -155,6 +163,7 @@ function showData(){
             var age = document.getElementById("age").value;
             var address = document.getElementById("address").value;
             var email = document.getElementById("email").value;
+            var contactNumber = document.getElementById("contactNumber").value;
             var dob = document.getElementById("dob").value;
             var hobbies = document.getElementById("hobbies").value;
            
@@ -182,6 +191,7 @@ function showData(){
             age: age,
             address: address,
             email: email,
+            contactNumber : contactNumber,
             dob: dob,
             hobbies: hobbies,
             gender: gender
@@ -196,6 +206,7 @@ function showData(){
           document.getElementById("age").value = "";
           document.getElementById("address").value = "";
           document.getElementById("email").value = "";
+          document.getElementById("contactNumber").value = "";
           document.getElementById("dob").value = "";
           document.getElementById("hobbies").value = ""; 
 
@@ -255,6 +266,7 @@ function showData(){
         document.getElementById("age").value = peopleList[index].age;
         document.getElementById("address").value = peopleList[index].address;
         document.getElementById("email").value = peopleList[index].email;
+        document.getElementById("contactNumber").value = peopleList[index].contactNumber;
         document.getElementById("dob").value = peopleList[index].dob;
         document.getElementById("hobbies").value = peopleList[index].hobbies;
         document.getElementsByName("gender").value = peopleList[index].gender;
@@ -263,12 +275,13 @@ function showData(){
         document.querySelector('#update').onclick = function() {
             if(validateForm() == true){
                 peopleList[index].name = document.getElementById("name").value;
-                peopleList[index].age = document.getElementById("age").value;
+               peopleList[index].age = document.getElementById("age").value;
                 peopleList[index].address = document.getElementById("address").value;
                 peopleList[index].email = document.getElementById("email").value;
-                peopleList[index].address = document.getElementById("dob").value;
-                peopleList[index].email = document.getElementById("hobbies").value;
-                peopleList[index].address = document.getElementsByName("gender").value;
+                peopleList[index].contactNumber = document.getElementById("contactNumber").value;
+                peopleList[index].dob = document.getElementById("dob").value;
+                peopleList[index].hobbies = document.getElementById("hobbies").value;
+                peopleList[index].gender = document.getElementsByName("gender").value;
                 
 
                 localStorage.setItem("peopleList", JSON.stringify(peopleList));
@@ -285,6 +298,7 @@ function showData(){
                 document.getElementById("age").value = "";
                 document.getElementById("address").value = "";
                 document.getElementById("email").value = "";
+                document.getElementById("contactNumber").value = "";
                 document.getElementById("dob").value = "";
                 document.getElementById("hobbies").value = "";
                 document.getElementByName("gender").value = "";
@@ -310,7 +324,9 @@ function showData(){
 
     const searchData = () => {
         // Get the search input value and convert to uppercase for case-insensitive comparison
-        let namefilter = document.getElementById("searchInput").value.toUpperCase();
+        let namefilter = document.getElementById("searchInput").value.replace(/\s+/g, '').toUpperCase();
+        // let emailfilter = document.getElementById("searchInput").value.toUpperCase();
+        // let contactfilter = document.getElementById("searchInput").value;
         let selectGender = document.getElementById("genderSelect").value.toUpperCase();
     
         // Get all rows from the table
@@ -323,23 +339,37 @@ function showData(){
         // Loop through each row and toggle visibility based on search input
         trArray.filter(row => {
             let tdName = row.getElementsByTagName("td")[1]; // Assuming search column is the 2nd column (index 1)
-            let tdGender = row.getElementsByTagName("td")[7]; 
+            let tdEmail = row.getElementsByTagName("td")[4]; // Assuming search column is the 5th column (index 4)
+            let tdContact = row.getElementsByTagName("td")[5]; // Assuming search column is the 6th column (index 5)
+            let tdGender = row.getElementsByTagName("td")[8]; // Assuming search column is the 9th column (index 8)
 
 
-            if (tdName || tdGender) {
-                let textValue = tdName.textContent || tdName.innerText;
+
+
+            if (tdName || tdEmail || tdContact || tdGender) {
+                let textValue = (tdName.textContent || tdName.innerText).toUpperCase();
+                let emailValue = (tdEmail.textContent || tdEmail.innerText).toUpperCase();;
+                let contactValue = (tdContact.textContent || tdContact.innerText).toUpperCase();;
                 let genderValue = tdGender.textContent || tdGender.innerText;
-                let rowValue = textValue.toUpperCase();
-                let rowGender = genderValue.toUpperCase();
+                // let rowValue = textValue.toUpperCase();
+                // let rowValueEmail = emailValue.toUpperCase();
+                // let rowValueContact = contactValue.toUpperCase();
+                // let rowGender = genderValue.toUpperCase();
                 
     
                 // Check if the row value contains the filter text or if filter is empty
-                if ((rowValue.indexOf(namefilter) > -1 || namefilter === "") && (selectGender === "" || rowGender === selectGender)) {
+                // if ((rowValue.indexOf(namefilter) > -1 || namefilter === "" || rowValueEmail.indexOf(emailfilter) > -1 || emailfilter === "" || rowValueContact.indexOf(contactfilter) > -1 || contactfilter === "") && (selectGender === "" || rowGender === selectGender)) {
+                //     row.style.display = ""; // Show the row
+                // } else {
+                //     row.style.display = "none"; // Hide the row
+                // }
+
+
+                if((textValue.includes(namefilter) || emailValue.includes(namefilter) || contactValue.includes(namefilter))  && (selectGender === "" || rowGender === selectGender)){
                     row.style.display = ""; // Show the row
                 } else {
                     row.style.display = "none"; // Hide the row
                 }
-
 
                 //  // Check if the row gender matches the selected gender or if no option is selected
                 //  if (selectGender === "" || rowGender === selectGender) {
@@ -353,35 +383,4 @@ function showData(){
             }
         });
     }
-    
-
-  /*  const genderSearch = () => {
-        // Get the selected gender value from the dropdown
-        let selectGender = document.getElementById("genderSelect").value.toUpperCase();
-    
-        // Get all rows from the table
-        let myTable = document.getElementById("crudTable");
-        let tr = myTable.getElementsByTagName("tr");
-    
-        // Convert tr HTMLCollection to array for easier manipulation
-        let trArray = Array.from(tr);
-    
-        // Loop through each row and toggle visibility based on selected gender
-        
-        trArray.filter(row => {
-            let td = row.getElementsByTagName("td")[7]; // Assuming gender column is the 8th column (index 7)
-            if (td) {
-                let textValue = td.textContent || td.innerText;
-                let rowGender = textValue.toUpperCase();
-                
-                // Check if the row gender matches the selected gender or if no option is selected
-                if (selectGender === "" || rowGender === selectGender) {
-                    row.style.display = ""; // Show the row
-                } else {
-                    row.style.display = "none"; // Hide the row
-                }
-            }
-        });
-    }
-        */
     
